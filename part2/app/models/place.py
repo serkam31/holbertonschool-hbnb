@@ -1,14 +1,12 @@
-from models.base_model import BaseModel
+from app.models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner):
+    def __init__(self, title,price, latitude, longitude, owner):
         super().__init__()
 
         if not title or len(title) > 100:
             raise ValueError("Title is required and must be 100 characters max")
-        if not (description):
-            raise ValueError("Description must be provided")
         if price is None or price < 0:
             raise ValueError("Price is required and must be a non-negative number")
         if latitude is None or not (-90 <= latitude <= 90):
@@ -18,8 +16,9 @@ class Place(BaseModel):
         
 
         self.title = title
-        self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
+        self.reviews = []  
+        self.amenities = []  

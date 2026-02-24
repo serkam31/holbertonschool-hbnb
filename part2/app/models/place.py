@@ -2,7 +2,7 @@ from app.models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title,price, latitude, longitude, owner):
+    def __init__(self, title, description,price, latitude, longitude, owner):
         super().__init__()
 
         if not title or len(title) > 100:
@@ -16,6 +16,7 @@ class Place(BaseModel):
         
 
         self.title = title
+        self.description = description
         self.price = price
         self.latitude = latitude
         self.longitude = longitude

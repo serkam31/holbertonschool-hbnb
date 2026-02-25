@@ -2,7 +2,7 @@ from app.models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, description,price, latitude, longitude, owner):
+    def __init__(self, title, description, price, latitude, longitude, owner):
         super().__init__()
 
         if not title or len(title) > 100:
@@ -13,7 +13,6 @@ class Place(BaseModel):
             raise ValueError("Latitude is required and must be between -90 and 90")
         if longitude is None or not (-180 <= longitude <= 180):
             raise ValueError("Longitude is required and must be between -180 and 180")
-        
 
         self.title = title
         self.description = description
@@ -21,8 +20,8 @@ class Place(BaseModel):
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
-        self.reviews = []  
-        self.amenities = []  
+        self.reviews = []
+        self.amenities = []
 
     def add_review(self, review):
         self.reviews.append(review)

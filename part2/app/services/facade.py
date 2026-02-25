@@ -1,26 +1,52 @@
+
 from app.persistence.repository import InMemoryRepository
+from app.models.user import User
 from app.models.amenity import Amenity
 
 
 class HBnBFacade:
+   
     def __init__(self):
         self.user_repo = InMemoryRepository()
+        self.amenity_repo = InMemoryRepository()
         self.place_repo = InMemoryRepository()
         self.review_repo = InMemoryRepository()
-        self.amenity_repo = InMemoryRepository()
 
-    # Placeholder method for creating a user
+    # -----------------
+    # User operations
+    # -----------------
     def create_user(self, user_data):
-        # Logic will be implemented in later tasks
-        pass
+        user = User(**user_data)
+        self.user_repo.add(user)
+        return user
 
-    # Placeholder method for fetching a place by ID
+    def get_user(self, user_id):
+        return self.user_repo.get(user_id)
+
+    def get_user_by_email(self, email):
+        return self.user_repo.get_by_attribute("email", email)
+
+    def get_users(self):
+        return self.user_repo.get_all()
+
+    def update_user(self, user_id, data):
+        user = self.get_user(user_id)
+        if not user:
+            return None
+        self.user_repo.update(user_id, data)
+        return self.get_user(user_id)
+
+    # -----------------
+    # Place operations (placeholder)
+    # -----------------
     def get_place(self, place_id):
-        # Logic will be implemented in later tasks
-        pass
+        return self.place_repo.get(place_id)
 
+    # -----------------
+    # Amenity operations
+    # -----------------
     def create_amenity(self, amenity_data):
-        amenity = Amenity(name=amenity_data['name'])
+        amenity = Amenity(name=amenity_data["name"])
         self.amenity_repo.add(amenity)
         return amenity
 
@@ -34,8 +60,10 @@ class HBnBFacade:
         amenity = self.amenity_repo.get(amenity_id)
         if not amenity:
             return None
-        name = amenity_data.get('name', '')
+
+        name = amenity_data.get("name", "")
         if not name or len(name) > 50:
             raise ValueError("Name is required and must be 50 characters max")
+
         self.amenity_repo.update(amenity_id, amenity_data)
-        return amenity
+        return self.amenity_repo.get(amenity_id)

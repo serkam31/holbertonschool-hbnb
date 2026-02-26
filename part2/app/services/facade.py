@@ -2,6 +2,7 @@
 from app.persistence.repository import InMemoryRepository
 from app.models.user import User
 from app.models.amenity import Amenity
+from app.models.place import Place
 
 
 class HBnBFacade:
@@ -36,11 +37,60 @@ class HBnBFacade:
         self.user_repo.update(user_id, data)
         return self.get_user(user_id)
 
+ # -----------------
+    # Place operations
     # -----------------
-    # Place operations (placeholder)
-    # -----------------
+    def create_place(self, place_data):
+        # 1) vérifier owner existe
+        owner_id = place_data.get("owner_id")
+        owner = self.get_user(owner_id)
+        if not owner:
+            raise ValueError("Owner not found")
+
+        # 2) vérifier amenities existent (liste d'IDs)
+        amenity_ids = place_data.get("amenities", [])
+        for a_id in amenity_ids:
+            if not self.get_amenity(a_id):
+                raise ValueError("Amenity not found")
+
+        # 3) créer Place (ton modèle Place doit accepter owner_id + amenities)
+        place = Place(
+            title=place_data.get("title"),
+            description=place_data.get("description", ""),
+            price=place_data.get("price"),
+            latitude=place_data.get("latitude"),
+            longitude=place_data.get("longitude"),
+            owner_id=owner_id,
+            amenities=amenity_ids,
+        )
+        self.place_repo.add(place)
+        return place
+
     def get_place(self, place_id):
         return self.place_repo.get(place_id)
+
+    def get_all_places(self):
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, place_data):
+        place = self.get_place(place_id)
+        if not place:
+            return None
+
+        # Si on modifie owner_id, vérifier que le nouveau owner existe
+        if "owner_id" in place_data:
+            owner = self.get_user(place_data["owner_id"])
+            if not owner:
+                raise ValueError("Owner not found")
+
+        # Si on modifie amenities, vérifier que toutes existent
+        if "amenities" in place_data:
+            for a_id in place_data["amenities"]:
+                if not self.get_amenity(a_id):
+                    raise ValueError("Amenity not found")
+
+        self.place_repo.update(place_id, place_data)
+        return self.get_place(place_id)
 
     # -----------------
     # Amenity operations

@@ -24,7 +24,10 @@ class UserList(Resource):
         if existing_user:
             return {'error': 'Email already registered'}, 400
 
-        new_user = facade.create_user(user_data)
+        try:
+            new_user = facade.create_user(user_data)
+        except (ValueError, KeyError) as e:
+            return {'error': str(e)}, 400
         return {
             'id': new_user.id,
             'first_name': new_user.first_name,
@@ -81,7 +84,10 @@ class UserResource(Resource):
             if existing_user:
                 return {'error': 'Email already registered'}, 400
 
-        updated = facade.update_user(user_id, data)
+        try:
+            updated = facade.update_user(user_id, data)
+        except (ValueError, KeyError) as e:
+            return {'error': str(e)}, 400
         return {
             'id': updated.id,
             'first_name': updated.first_name,

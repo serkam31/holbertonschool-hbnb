@@ -14,7 +14,8 @@ class BaseModel:
 
     def update(self, data):
         """Update the attributes of the object based on the provided dictionary"""
+        protected = {'id', 'created_at', 'updated_at'}
         for key, value in data.items():
-            if hasattr(self, key):
+            if key not in protected and hasattr(self, key):
                 setattr(self, key, value)
         self.save()  # Update the updated_at timestamp

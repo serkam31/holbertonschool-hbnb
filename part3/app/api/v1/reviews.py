@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 api = Namespace('reviews', description='Review operations')
 
@@ -16,7 +17,19 @@ class ReviewList(Resource):
     @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def post(self):
+
+        current_user = get_jwt_identity()
+        place = facade.get_place(review_data['place_id'])
+        if place.owner_id == current_user:
+            return {"error": "You cannot review your own place"}, 400
+        existing = [r for r in facade.get_reviews_by_place(place.id)
+                    if r.user_id == current_user]
+
+        if existing:
+            return {"error": "You have already reviewed this place"}, 400
+
         """Register a new review"""
         review_data = api.payload
         try:
@@ -62,7 +75,14 @@ class ReviewResource(Resource):
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def put(self, review_id):
+
+        current_user = get_jwt_identity()
+        review = facade.get_review(review_id)
+        if review.user_id != current_user:
+            return {"error": "Unauthorized action"}, 403
+
         """Update a review's information"""
         review_data = api.payload
         try:
@@ -81,7 +101,13 @@ class ReviewResource(Resource):
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
+    @jwt_required()
     def delete(self, review_id):
+        current_user = get_jwt_identity()
+        review = facade.get_review(review_id)
+        if review.user_id != current_user:
+            return {'error': 'Unauthorized action'}, 403
+
         """Delete a review"""
         if not facade.delete_review(review_id):
             return {'error': 'Review not found'}, 404

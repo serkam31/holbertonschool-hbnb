@@ -12,7 +12,6 @@ class User(BaseModel):
         self._is_admin = is_admin
         self.hash_password(password)
 
-
     @property
     def first_name(self):
         return self._first_name

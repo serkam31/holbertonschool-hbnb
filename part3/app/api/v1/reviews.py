@@ -23,6 +23,7 @@ class ReviewList(Resource):
         """Register a new review"""
         review_data = api.payload
         current_user = get_jwt_identity()
+        review_data['user_id'] = current_user
         place = facade.get_place(review_data['place_id'])
 
         if not place:

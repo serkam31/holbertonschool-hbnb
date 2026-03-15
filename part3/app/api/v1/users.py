@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
-from flask_jwt_extended import jwt_required, get_jwt
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 api = Namespace('users', description='User operations')
 
@@ -92,21 +92,28 @@ class UserResource(Resource):
     @jwt_required()
     def put(self, user_id):
         """Update user details"""
-
+        current_user = get_jwt_identity()
         claims = get_jwt()
-        if not claims.get('is_admin', False):
-            return {'error': 'Admin privileges required'}, 403
-
+        is_admin = claims.get('is_admin', False)
         data = api.payload
+
+        if is_admin:
+            # Admin → peut modifier n'importe quel user, email et password inclus
+            email = data.get('email')
+            if email:
+                existing = facade.get_user_by_email(email)
+                if existing and existing.id != user_id:
+                    return {'error': 'Email already in use'}, 400
+        else:
+            # User normal → seulement ses propres données, sans email/password
+            if current_user != user_id:
+                return {'error': 'Unauthorized action'}, 403
+            if 'email' in data or 'password' in data:
+                return {'error': 'You cannot modify email or password'}, 400
+
         user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
-
-        email = data.get('email')
-        if email:
-            existing_user = facade.get_user_by_email(email)
-            if existing_user and existing_user.id != user_id:
-                return {'error': 'Email already in use'}, 400
 
         try:
             updated = facade.update_user(user_id, data)

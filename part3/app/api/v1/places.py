@@ -63,7 +63,10 @@ class PlaceList(Resource):
             'latitude': new_place.latitude,
             'longitude': new_place.longitude,
             'owner_id': new_place.owner_id,
-            'amenities': [{'id': a.id, 'name': a.name} for a in new_place.amenities]
+            'amenities': [
+                {'id': a.id, 'name': a.name}
+                for a in new_place.amenities
+            ]
         }, 201
 
     @api.response(200, 'List of places retrieved successfully')
@@ -107,8 +110,14 @@ class PlaceResource(Resource):
 
         reviews_data = [
             {
-                'id': r.id, 'text': r.text,
-                'rating': r.rating, 'user_id': r.user_id
+                'id': r.id,
+                'text': r.text,
+                'rating': r.rating,
+                'user_id': r.user_id,
+                'user_name': (
+                    r.user.first_name + ' ' + r.user.last_name
+                    if r.user else 'Unknown'
+                )
             }
             for r in place.reviews
         ]
@@ -159,7 +168,10 @@ class PlaceResource(Resource):
             'latitude': updated_place.latitude,
             'longitude': updated_place.longitude,
             'owner_id': updated_place.owner_id,
-            'amenities': [{'id': a.id, 'name': a.name} for a in updated_place.amenities]
+            'amenities': [
+                {'id': a.id, 'name': a.name}
+                for a in updated_place.amenities
+            ]
         }, 200
 
 

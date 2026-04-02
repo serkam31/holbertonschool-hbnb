@@ -18,6 +18,7 @@
   --red-pale: #F9EDED;
   --success: #3A6B3A;
   --success-pale: #EEF4EE;
+  --gray-bg: #F2EEE6;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -82,6 +83,7 @@ input, textarea, select { font-family: var(--font-sans); }
   border-radius: var(--radius-full);
   cursor: pointer; transition: all var(--transition);
   background: var(--surface);
+  font-family: inherit; font-size: inherit; text-decoration: none;
 }
 .navbar-user:hover { border-color: var(--green); box-shadow: var(--shadow-sm); }
 .navbar-avatar {
@@ -114,6 +116,7 @@ input, textarea, select { font-family: var(--font-sans); }
 .btn-full { width: 100%; justify-content: center; }
 
 /* ── Forms ── */
+.form { width: 100%; }
 .form-group { margin-bottom: 1.5rem; }
 .form-row { display: flex; gap: 1.25rem; }
 .form-row .form-group { flex: 1; }
@@ -180,6 +183,11 @@ label.form-label {
   display: flex; align-items: center; justify-content: center;
   font-size: 52px; background: var(--cream-dark);
 }
+.place-card-img-photo {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.place-card:hover .place-card-img-photo { transform: scale(1.05); }
 .place-card-body { padding: 20px 22px 22px; }
 .place-card-title { font-size: 17px; font-weight: 600; color: var(--black); margin-bottom: 5px; letter-spacing: -0.2px; }
 .place-card-sub { font-size: 13px; color: var(--gray); margin-bottom: 12px; }
@@ -227,6 +235,10 @@ label.form-label {
   width: 100%; height: 100%; display: flex; align-items: center;
   justify-content: center; font-size: 96px;
   position: absolute; top: 0; left: 0; background: var(--cream-darker);
+}
+.place-hero-img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; object-fit: cover;
 }
 .place-hero-overlay {
   position: relative; z-index: 1; width: 100%; padding: 2.5rem;
@@ -323,6 +335,15 @@ label.form-label {
 .home-hero-content h1 em { color: rgba(255,255,255,0.80); font-style: italic; }
 .home-hero-content p { font-size: 18px; color: rgba(255,255,255,0.85); font-weight: 400; max-width: 480px; line-height: 1.6; }
 
+/* ── Footer ── */
+.site-footer {
+  background: var(--black);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 2rem;
+  font-size: 13px;
+}
+
 /* ── Login ── */
 .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--cream-dark); padding: 2rem; }
 .login-card { background: var(--surface); border-radius: var(--radius-xl); padding: 3rem; width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); border: 1px solid var(--gray-border); }
@@ -338,6 +359,21 @@ label.form-label {
 .empty-state p { font-size: 16px; color: var(--gray); }
 .loading { text-align: center; padding: 6rem; color: var(--gray); font-size: 16px; }
 
+/* ── Cookie Banner ── */
+.cookie-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  background: var(--black); color: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+}
+.cookie-banner-content {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.cookie-banner-text { flex: 1; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.85); margin: 0; }
+.cookie-banner-link { color: var(--green); text-decoration: underline; }
+.cookie-banner-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .detail-layout { grid-template-columns: 1fr; gap: 2rem; }
@@ -347,14 +383,51 @@ label.form-label {
   .home-hero-content { padding: 0 2.5rem; }
   .place-hero { height: 280px; }
   .place-hero-title { font-size: 32px; }
+  .places-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .admin-tabs { gap: 4px; }
+  .admin-tab { padding: 8px 14px; font-size: 13px; }
 }
+
 @media (max-width: 600px) {
   .page { padding: 2rem 1.25rem; }
   .form-row { flex-direction: column; gap: 0; }
   .home-hero { height: 50vh; min-height: 320px; }
   .home-hero-content { padding: 0 1.5rem; }
-  .home-hero-content h1 { font-size: 38px; }
+  .home-hero-content h1 { font-size: 32px; }
+  .home-hero-content p { font-size: 14px; }
   .places-grid { grid-template-columns: 1fr; }
   .card { padding: 1.75rem; }
   .login-card { padding: 2rem; }
+
+  /* Navbar mobile */
+  .navbar { height: auto; padding: 12px 0; }
+  .navbar-inner { flex-wrap: wrap; gap: 10px; padding: 0 1.25rem; }
+  .navbar-links { width: 100%; justify-content: flex-end; flex-wrap: wrap; gap: 6px; }
+  .navbar-link { padding: 6px 10px; font-size: 13px; }
+  .navbar-username { display: none; }
+  .login-button { padding: 8px 16px; font-size: 13px; }
+
+  /* Filtres mobile */
+  .filters { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 2rem; }
+  .filters .search-input { max-width: 100% !important; width: 100%; }
+  .filters .btn { width: 100%; }
+
+  /* Place detail mobile */
+  .place-hero { height: 220px; }
+  .place-hero-title { font-size: 24px; }
+  .place-hero-price { font-size: 16px; }
+  .review-header { flex-wrap: wrap; gap: 6px; }
+  .review-header > div:last-child { width: 100%; justify-content: flex-end; }
+  .sidebar-card { padding: 1.5rem; }
+  .sidebar-price { font-size: 22px; }
+
+  /* Admin mobile */
+  .admin-tabs-bar { flex-wrap: wrap; gap: 4px; }
+  .admin-tabs-bar .btn { flex: 1 1 auto; text-align: center; border-radius: var(--radius-md) !important; }
+
+  /* Section title */
+  .section-title { font-size: 20px; }
+
+  /* Footer */
+  .site-footer { padding: 2rem 1.25rem; font-size: 13px; }
 }

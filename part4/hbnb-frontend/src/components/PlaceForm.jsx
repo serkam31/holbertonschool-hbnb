@@ -45,40 +45,42 @@ export default function PlaceForm({ initialData = {}, onSubmit, loading }) {
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-label">Titre</label>
-          <input className="form-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Mon appartement..." required />
+          <label htmlFor="place-title" className="form-label">Titre</label>
+          <input id="place-title" className="form-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Mon appartement..." required />
         </div>
         <div className="form-group">
-          <label className="form-label">Prix / nuit (€)</label>
-          <input className="form-input" type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="100" required />
+          <label htmlFor="place-price" className="form-label">Prix / nuit (€)</label>
+          <input id="place-price" className="form-input" type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="100" required />
         </div>
       </div>
 
       <div className="form-group">
-        <label className="form-label">Description</label>
-        <textarea className="form-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Décrivez votre place..." />
+        <label htmlFor="place-description" className="form-label">Description</label>
+        <textarea id="place-description" className="form-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Décrivez votre place..." />
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-label">Latitude</label>
-          <input className="form-input" type="number" step="any" value={latitude} onChange={(e) => setLatitude(e.target.value)} placeholder="48.8566" required />
+          <label htmlFor="place-latitude" className="form-label">Latitude</label>
+          <input id="place-latitude" className="form-input" type="number" step="any" value={latitude} onChange={(e) => setLatitude(e.target.value)} placeholder="48.8566" required />
         </div>
         <div className="form-group">
-          <label className="form-label">Longitude</label>
-          <input className="form-input" type="number" step="any" value={longitude} onChange={(e) => setLongitude(e.target.value)} placeholder="2.3522" required />
+          <label htmlFor="place-longitude" className="form-label">Longitude</label>
+          <input id="place-longitude" className="form-input" type="number" step="any" value={longitude} onChange={(e) => setLongitude(e.target.value)} placeholder="2.3522" required />
         </div>
       </div>
 
       <div className="form-group">
-        <label className="form-label">Équipements</label>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
+        <label className="form-label" id="amenities-label">Équipements</label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }} role="group" aria-labelledby="amenities-label">
           {amenities.map((a) => (
             <button
               key={a.id}
               type="button"
               onClick={() => toggleAmenity(a.id)}
               className={`pill ${selectedAmenities.includes(a.id) ? 'pill-active' : ''}`}
+              aria-pressed={selectedAmenities.includes(a.id)}
+              aria-label={`${selectedAmenities.includes(a.id) ? 'Retirer' : 'Ajouter'} l'équipement ${a.name}`}
             >
               {a.name}
             </button>

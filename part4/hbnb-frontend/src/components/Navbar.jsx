@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+
 export default function Navbar() {
-  const { currentUser, logout } = useAuth()
+  const { currentUser, logout, isAdmin } = useAuth()
   const navigate = useNavigate()
 
   function handleLogout() {
@@ -13,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-        <Link to="/" className="navbar-logo">HBn<span>B</span></Link>
+        <Link to="/" className="navbar-logo logo">HBn<span>B</span></Link>
 
         <div className="navbar-links">
           {currentUser ? (
@@ -21,18 +22,23 @@ export default function Navbar() {
               <Link to="/places/create" className="navbar-link">
                 + Ajouter une place
               </Link>
-              <div className="navbar-user" onClick={() => navigate('/profile')}>
+              {isAdmin && (
+                <Link to="/admin" className="navbar-link" style={{ color: 'var(--green)', fontWeight: '600' }}>
+                  ⚙ Admin
+                </Link>
+              )}
+              <button className="navbar-user" onClick={() => navigate('/profile')} aria-label="Voir mon profil">
                 <span className="navbar-username">{currentUser.first_name}</span>
-                <div className="navbar-avatar">
+                <div className="navbar-avatar" aria-hidden="true">
                   {currentUser.first_name?.[0]}{currentUser.last_name?.[0]}
                 </div>
-              </div>
-              <button onClick={handleLogout} className="btn btn-outline btn-sm">
+              </button>
+              <button onClick={handleLogout} className="btn btn-outline btn-sm login-button">
                 Déconnexion
               </button>
             </>
           ) : (
-            <Link to="/login" className="btn btn-primary btn-sm">
+            <Link to="/login" id="login-link" className="btn btn-primary btn-sm login-button">
               Connexion
             </Link>
           )}

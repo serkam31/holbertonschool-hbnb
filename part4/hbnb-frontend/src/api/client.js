@@ -1,7 +1,8 @@
 const BASE_URL = 'http://127.0.0.1:5000/api/v1'
 
 function getToken() {
-  return localStorage.getItem('token')
+  const match = document.cookie.match(/(?:^|; )token=([^;]*)/)
+  return match ? decodeURIComponent(match[1]) : null
 }
 
 async function request(endpoint, options = {}) {
@@ -19,7 +20,7 @@ async function request(endpoint, options = {}) {
   })
 
   if (response.status === 401) {
-    localStorage.removeItem('token')
+    document.cookie = 'token=; path=/; max-age=0'
     window.location.href = '/login'
     return
   }
@@ -43,8 +44,12 @@ export const login = (email, password) =>
 // Users
 export const getUsers = () => request('/users/')
 export const getUser = (id) => request(`/users/${id}`)
+export const createUser = (data) =>
+  request('/users/', { method: 'POST', body: JSON.stringify(data) })
 export const updateUser = (id, data) =>
   request(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const deleteUser = (id) =>
+  request(`/users/${id}`, { method: 'DELETE' })
 
 // Places
 export const getPlaces = () => request('/places/')
@@ -61,6 +66,7 @@ export const createReview = (data) =>
   request('/reviews/', { method: 'POST', body: JSON.stringify(data) })
 export const updateReview = (id, data) =>
   request(`/reviews/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+export const getReview = (id) => request(`/reviews/${id}`)
 export const deleteReview = (id) =>
   request(`/reviews/${id}`, { method: 'DELETE' })
 

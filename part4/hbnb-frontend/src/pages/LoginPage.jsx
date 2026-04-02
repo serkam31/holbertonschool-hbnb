@@ -36,10 +36,11 @@ export default function LoginPage() {
 
         {error && <div className="alert alert-error">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
+        <form id="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Email</label>
+            <label htmlFor="login-email" className="form-label">Email</label>
             <input
+              id="login-email"
               className="form-input"
               type="email"
               value={email}
@@ -49,8 +50,9 @@ export default function LoginPage() {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Mot de passe</label>
+            <label htmlFor="login-password" className="form-label">Mot de passe</label>
             <input
+              id="login-password"
               className="form-input"
               type="password"
               value={password}

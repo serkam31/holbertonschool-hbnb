@@ -12,6 +12,19 @@ function parseJwt(token) {
   }
 }
 
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'))
+  return match ? decodeURIComponent(match[1]) : null
+}
+
+function setCookie(name, value) {
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/`
+}
+
+function deleteCookie(name) {
+  document.cookie = `${name}=; path=/; max-age=0`
+}
+
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
@@ -19,7 +32,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     async function restoreSession() {
-      const token = localStorage.getItem('token')
+      const token = getCookie('token')
       if (!token) {
         setLoading(false)
         return
@@ -27,7 +40,7 @@ export function AuthProvider({ children }) {
 
       const payload = parseJwt(token)
       if (!payload) {
-        localStorage.removeItem('token')
+        deleteCookie('token')
         setLoading(false)
         return
       }
@@ -37,7 +50,7 @@ export function AuthProvider({ children }) {
         setCurrentUser(user)
         setIsAdmin(payload.is_admin ?? false)
       } catch {
-        localStorage.removeItem('token')
+        deleteCookie('token')
       } finally {
         setLoading(false)
       }
@@ -48,7 +61,7 @@ export function AuthProvider({ children }) {
 
   async function login(email, password) {
     const { access_token } = await apiLogin(email, password)
-    localStorage.setItem('token', access_token)
+    setCookie('token', access_token)
     const payload = parseJwt(access_token)
     const user = await getUser(payload.sub)
     setCurrentUser(user)
@@ -57,7 +70,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
-    localStorage.removeItem('token')
+    deleteCookie('token')
     setCurrentUser(null)
     setIsAdmin(false)
   }

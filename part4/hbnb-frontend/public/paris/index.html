@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HBNB — Premium Parisian Residences</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ─── LOADER ──────────────────────────────────────────── -->
+  <div id="loader">
+    <div class="loader-brand">HBNB</div>
+    <div class="loader-tagline">Premium Parisian Residences</div>
+    <div class="loader-bar-wrap">
+      <div id="loader-bar"></div>
+    </div>
+    <div id="loader-percent">0%</div>
+  </div>
+
+  <!-- ─── HEADER ──────────────────────────────────────────── -->
+  <header class="site-header" id="site-header">
+    <nav>
+      <div class="logo">
+        <svg viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="HBNB">
+          <text x="0" y="26" font-family="Cormorant Garamond, serif" font-size="28" font-weight="600" fill="#f0ede8" letter-spacing="1">HB</text>
+          <line x1="58" y1="4" x2="58" y2="28" stroke="#c9a96e" stroke-width="1"/>
+          <text x="64" y="26" font-family="Cormorant Garamond, serif" font-size="20" font-weight="300" fill="#c9a96e" letter-spacing="2">NB</text>
+        </svg>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" id="nav-residences">Residences</a></li>
+        <li><a href="#" id="nav-locations">Locations</a></li>
+        <li><a href="#section-services">Services</a></li>
+        <li><a href="#section-cta" class="nav-cta">Book Now</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ─── CANVAS (full viewport on hero, shrinks to right 2/3 on scroll) ── -->
+  <div class="canvas-wrap" id="canvas-wrap">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- ─── HERO OVERLAY (transparent, text over the canvas) ─── -->
+  <section class="hero-standalone" id="hero-section">
+    <div class="hero-overlay-content">
+      <span class="section-label">Paris · HBNB · Est. 2024</span>
+      <h1 class="hero-heading">
+        <span class="word">Where</span>
+        <span class="word accent">Paris</span>
+        <span class="word">Lives.</span>
+      </h1>
+      <p class="hero-tagline">Premium Parisian residences,<br>curated for the discerning few.</p>
+    </div>
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ─── DARK OVERLAY (stats section only, left zone) ─────── -->
+  <div id="dark-overlay"></div>
+
+  <!-- ─── MARQUEE ──────────────────────────────────────────── -->
+  <div class="marquee-wrap" id="marquee-wrap" data-scroll-speed="-30">
+    <div class="marquee-text">PARIS&nbsp;&nbsp;·&nbsp;&nbsp;HBNB&nbsp;&nbsp;·&nbsp;&nbsp;LUXURY&nbsp;&nbsp;·&nbsp;&nbsp;RÉSIDENCE&nbsp;&nbsp;·&nbsp;&nbsp;PARIS&nbsp;&nbsp;·&nbsp;&nbsp;HBNB&nbsp;&nbsp;·&nbsp;&nbsp;LUXURY&nbsp;&nbsp;·&nbsp;&nbsp;RÉSIDENCE&nbsp;&nbsp;·&nbsp;&nbsp;PARIS&nbsp;&nbsp;·&nbsp;&nbsp;HBNB&nbsp;&nbsp;·&nbsp;&nbsp;LUXURY&nbsp;&nbsp;·&nbsp;&nbsp;</div>
+  </div>
+
+  <!-- ─── SCROLL CONTAINER (1000vh) ───────────────────────── -->
+  <div id="scroll-container">
+
+    <!-- QUOTE — fade-up -->
+    <section class="scroll-section section-quote align-left"
+             data-enter="5" data-leave="17" data-animation="fade-up">
+      <div class="section-inner">
+        <blockquote class="quote-text">"Paris is always<br>a good idea."</blockquote>
+        <cite class="quote-cite">— Audrey Hepburn</cite>
+        <p class="section-body">At HBNB, we believe every stay should feel like your finest decision yet. This is Paris — lived, not visited.</p>
+      </div>
+    </section>
+
+    <!-- 001 / Vision — slide-left -->
+    <section class="scroll-section section-content align-left"
+             data-enter="18" data-leave="30" data-animation="slide-left">
+      <div class="section-inner">
+        <span class="section-label">001 / Vision</span>
+        <h2 class="section-heading">The Art<br>of Living.</h2>
+        <p class="section-body">HBNB reimagines the Parisian residence. Not just a place to stay — a place to belong, in the city that invented elegance.</p>
+        <p class="section-body-secondary">Each property is a story. Hand-picked by our curators, refined by decades of Parisian savoir-faire.</p>
+      </div>
+    </section>
+
+    <!-- 002 / Spaces — fade-up -->
+    <section class="scroll-section section-content align-left" id="section-residences"
+             data-enter="31" data-leave="43" data-animation="fade-up">
+      <div class="section-inner">
+        <span class="section-label">002 / Residences</span>
+        <h2 class="section-heading">Curated<br>Spaces.</h2>
+        <p class="section-body">Every residence hand-selected for architectural merit, natural light, and that ineffable quality only Paris bestows.</p>
+        <p class="section-body-secondary">From Haussmann apartments to hidden courtyard ateliers — spaces that feel like they were always yours.</p>
+      </div>
+    </section>
+
+    <!-- 003 / Location — scale-up -->
+    <section class="scroll-section section-content align-left" id="section-locations"
+             data-enter="44" data-leave="56" data-animation="scale-up">
+      <div class="section-inner">
+        <span class="section-label">003 / Location</span>
+        <h2 class="section-heading">Prime<br>Arrondissements.</h2>
+        <p class="section-body">From the Marais to Saint-Germain, our properties occupy addresses that define Parisian prestige.</p>
+        <p class="section-body-secondary">The 1st, 4th, 6th, 7th, 8th — every neighbourhood a universe. We know them all.</p>
+      </div>
+    </section>
+
+    <!-- 004 / Service — rotate-in -->
+    <section class="scroll-section section-content align-left" id="section-services"
+             data-enter="57" data-leave="69" data-animation="rotate-in">
+      <div class="section-inner">
+        <span class="section-label">004 / Service</span>
+        <h2 class="section-heading">White-Glove<br>Concierge.</h2>
+        <p class="section-body">A dedicated team anticipates every need — from private dining reservations to bespoke city experiences.</p>
+        <p class="section-body-secondary">Available 24/7. Discreet, efficient, and genuinely passionate about making Paris extraordinary for you.</p>
+      </div>
+    </section>
+
+    <!-- 005 / Stats — stagger-up (dark overlay) -->
+    <section class="scroll-section section-stats"
+             data-enter="70" data-leave="82" data-animation="stagger-up">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-number" data-value="120" data-decimals="0">0</span>
+            <span class="stat-suffix">+</span>
+          </div>
+          <span class="stat-label">Curated Properties</span>
+        </div>
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-number" data-value="4.9" data-decimals="1">0</span>
+            <span class="stat-suffix">★</span>
+          </div>
+          <span class="stat-label">Guest Rating</span>
+        </div>
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-number" data-value="12" data-decimals="0">0</span>
+            <span class="stat-suffix">e</span>
+          </div>
+          <span class="stat-label">Arrondissements</span>
+        </div>
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-number" data-value="98" data-decimals="0">0</span>
+            <span class="stat-suffix">%</span>
+          </div>
+          <span class="stat-label">Return Guests</span>
+        </div>
+        <div class="stat">
+          <div class="stat-row">
+            <span class="stat-number" data-value="15" data-decimals="0">0</span>
+            <span class="stat-suffix">+</span>
+          </div>
+          <span class="stat-label">Years of Expertise</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 006 / CTA — clip-reveal, persist -->
+    <section class="scroll-section section-cta align-left" id="section-cta"
+             data-enter="84" data-leave="100" data-animation="clip-reveal" data-persist="true">
+      <div class="section-inner">
+        <span class="section-label">005 / Reserve</span>
+        <h2 class="section-heading">Discover Your<br>Residence.</h2>
+        <p class="section-body">A select number of residences are available for the season. Begin your journey into Parisian living.</p>
+        <p class="section-body-secondary">Every inquiry is treated with the utmost discretion. Our advisors are ready.</p>
+        <a href="#" class="cta-button">Explore Residences</a>
+        <p class="section-note">Private viewings available upon request.</p>
+      </div>
+    </section>
+
+  </div><!-- /#scroll-container -->
+
+  <!-- ─── RESIDENCES MODAL ────────────────────────────────── -->
+  <div id="residences-modal" role="dialog" aria-modal="true" aria-label="Our Residences">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <div class="modal-header">
+        <span class="section-label">HBNB · Collection</span>
+        <h2 class="modal-title">Our Residences</h2>
+        <p class="modal-subtitle">Four distinct expressions of Parisian living, each curated to perfection.</p>
+      </div>
+      <div class="modal-grid">
+
+        <!-- Haussmann Apartment -->
+        <article class="residence-card">
+          <div class="residence-card-number">01</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Haussmann<br>Apartment</h3>
+            <p class="residence-card-desc">The quintessential Parisian residence. Soaring 3.5m ceilings, original parquet de Versailles, hand-carved mouldings and south-facing balconies overlooking Haussmann boulevards. These are the apartments Paris was built for.</p>
+            <ul class="residence-card-features">
+              <li>65 – 220 m²</li>
+              <li>1st · 6th · 8th · 16th arr.</li>
+              <li>From €480 / night</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">Enquire</a>
+          </div>
+        </article>
+
+        <!-- Courtyard Atelier -->
+        <article class="residence-card">
+          <div class="residence-card-number">02</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Courtyard<br>Atelier</h3>
+            <p class="residence-card-desc">Hidden behind ancient carriage gates, these artist studios and converted ateliers offer a secret Paris few visitors ever find. Exposed stone, double-height volumes, private courtyard access — a city within the city.</p>
+            <ul class="residence-card-features">
+              <li>40 – 130 m²</li>
+              <li>3rd · 4th · 11th arr.</li>
+              <li>From €320 / night</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">Enquire</a>
+          </div>
+        </article>
+
+        <!-- Rooftop Penthouse -->
+        <article class="residence-card">
+          <div class="residence-card-number">03</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Rooftop<br>Penthouse</h3>
+            <p class="residence-card-desc">Paris from above. Wrap-around terraces, panoramic zinc-rooftop views, Eiffel Tower silhouettes at dusk. These top-floor residences are our rarest properties — a privileged vantage point over the most beautiful city in the world.</p>
+            <ul class="residence-card-features">
+              <li>80 – 280 m²</li>
+              <li>7th · 8th · 15th arr.</li>
+              <li>From €950 / night</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">Enquire</a>
+          </div>
+        </article>
+
+        <!-- Boutique Townhouse -->
+        <article class="residence-card">
+          <div class="residence-card-number">04</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Boutique<br>Townhouse</h3>
+            <p class="residence-card-desc">The ultimate private Parisian experience — a full hôtel particulier at your disposal. Multiple floors, private garden or courtyard, dedicated concierge. Reserved for those who demand complete discretion and absolute space.</p>
+            <ul class="residence-card-features">
+              <li>250 – 800 m²</li>
+              <li>5th · 6th · 7th arr.</li>
+              <li>From €2 400 / night</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">Enquire</a>
+          </div>
+        </article>
+
+      </div><!-- /.modal-grid -->
+    </div><!-- /.modal-panel -->
+  </div><!-- /#residences-modal -->
+
+  <!-- ─── LOCATIONS MODAL ──────────────────────────────────── -->
+  <div id="locations-modal" role="dialog" aria-modal="true" aria-label="Our Locations">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <div class="modal-header">
+        <span class="section-label">HBNB · Arrondissements</span>
+        <h2 class="modal-title">Our Locations</h2>
+        <p class="modal-subtitle">Twelve arrondissements. Each a world unto itself. We know them intimately.</p>
+      </div>
+      <div class="modal-grid locations-grid">
+
+        <!-- Le Marais -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">3e &amp; 4e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Le Marais</h3>
+            <p class="residence-card-desc">Medieval streets and contemporary art galleries in perfect tension. The Marais is bohemian, cosmopolitan, and irreplaceable — home to the Place des Vosges, the oldest square in Paris, and the city's most vibrant cultural scene.</p>
+            <ul class="residence-card-features">
+              <li>Place des Vosges · Centre Pompidou</li>
+              <li>14 properties available</li>
+              <li>Courtyard Ateliers &amp; Haussmann</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+        <!-- Saint-Germain-des-Prés -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">6e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Saint-Germain-<br>des-Prés</h3>
+            <p class="residence-card-desc">The literary heart of Paris. Café de Flore, Les Deux Magots, the Jardin du Luxembourg steps away. Saint-Germain is where Paris thinks, writes, and dreams — and where our finest Haussmann apartments overlook cobblestone streets.</p>
+            <ul class="residence-card-features">
+              <li>Jardin du Luxembourg · Odéon</li>
+              <li>22 properties available</li>
+              <li>Haussmann &amp; Boutique Townhouse</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+        <!-- Triangle d'Or -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">8e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Triangle d'Or</h3>
+            <p class="residence-card-desc">Avenue Montaigne, Champs-Élysées, Avenue George V — the golden triangle of Parisian prestige. Our 8th arrondissement penthouses and apartments are surrounded by the world's most celebrated maisons de couture and gastronomic destinations.</p>
+            <ul class="residence-card-features">
+              <li>Champs-Élysées · Arc de Triomphe</li>
+              <li>18 properties available</li>
+              <li>Rooftop Penthouse &amp; Haussmann</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+        <!-- Île Saint-Louis -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">4e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Île Saint-Louis</h3>
+            <p class="residence-card-desc">An island within an island — serene, timeless, and utterly Parisian. The Île Saint-Louis floats in the Seine with an atmosphere unchanged for centuries. Our residences here are among the most sought-after addresses in all of Europe.</p>
+            <ul class="residence-card-features">
+              <li>Seine views · Notre-Dame proximity</li>
+              <li>8 properties available</li>
+              <li>Haussmann &amp; Courtyard Atelier</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+        <!-- Invalides -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">7e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Invalides &amp;<br>Eiffel</h3>
+            <p class="residence-card-desc">The grandest perspectives in Paris. Wide avenues, embassies, and the Eiffel Tower as a constant companion. The 7th is diplomatic Paris at its most elegant — calm, prestigious, and home to our most spectacular rooftop terraces.</p>
+            <ul class="residence-card-features">
+              <li>Eiffel Tower · Musée d'Orsay</li>
+              <li>20 properties available</li>
+              <li>Rooftop Penthouse &amp; Townhouse</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+        <!-- Montmartre -->
+        <article class="residence-card location-card">
+          <div class="residence-card-number">18e</div>
+          <div class="residence-card-body">
+            <h3 class="residence-card-title">Montmartre</h3>
+            <p class="residence-card-desc">Winding staircases, vineyard walls, and Sacré-Cœur glowing at dawn. Montmartre is Paris at its most romantic and painterly. Our ateliers and artist apartments here carry the spirit of Picasso, Modigliani, and the entire Belle Époque.</p>
+            <ul class="residence-card-features">
+              <li>Sacré-Cœur · Place du Tertre</li>
+              <li>11 properties available</li>
+              <li>Courtyard Atelier &amp; Haussmann</li>
+            </ul>
+            <a href="#section-cta" class="residence-card-cta modal-cta-link">View Properties</a>
+          </div>
+        </article>
+
+      </div><!-- /.modal-grid -->
+    </div><!-- /.modal-panel -->
+  </div><!-- /#locations-modal -->
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
